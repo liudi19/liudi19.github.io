@@ -894,3 +894,83 @@ a:hover {
     margin-bottom: 1rem;
     font-size: 1.2rem;
 }
+
+/* 服务流程样式 */
+.service-flow {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+}
+
+.flow-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.flow-item {
+    position: relative;
+    text-align: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.flow-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 107, 0, 0.2);
+}
+
+.flow-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #ff6b00;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-weight: bold;
+}
+
+.flow-item h3 {
+    color: #333;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.flow-arrow {
+    position: absolute;
+    right: -1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #ff6b00;
+    z-index: 1;
+}
+
+.flow-item:last-child .flow-arrow {
+    display: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .flow-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .flow-arrow {
+        transform: rotate(90deg);
+        right: 50%;
+        top: auto;
+        bottom: -1.5rem;
+    }
+}
