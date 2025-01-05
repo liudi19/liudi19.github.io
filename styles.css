@@ -168,28 +168,56 @@ section h2 {
     filter: none;
 }
 
-/* 社交媒体链接样式 */
+/* 页脚社交媒体样式 */
 .social-links {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    gap: 20px;
+    justify-content: center;
 }
 
+.social-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+    object-fit: contain; /* 确保图标保持比例 */
+}
+
+.social-icon:hover .icon {
+    transform: scale(1.1);
+}
+
+.qr-popup {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    margin-bottom: 10px; /* 添加一些间距 */
+}
+
+.qr-code {
+    width: 150px;
+    height: 150px;
+    object-fit: contain; /* 确保二维码图片保持比例 */
+}
+
+.social-icon:hover .qr-popup {
+    display: block;
+}
+
+/* 移除旧的社交媒体链接样式 */
 .social-link {
-    display: flex;
-    align-items: center;
-    color: white;
-    text-decoration: none;
-    gap: 0.5rem;
-}
-
-.social-link img {
-    width: 24px;
-    height: 24px;
-}
-
-.social-link:hover {
-    color: #ffd9b3;
+    display: none; /* 隐藏旧的样式 */
 }
 
 /* 页脚样式 */
