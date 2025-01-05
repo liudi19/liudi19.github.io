@@ -858,3 +858,12 @@ a:hover {
         font-size: 1.2rem;
     }
 }
+
+.partner-info h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.partner-info h3 a:hover {
+    text-decoration: underline;
+}
