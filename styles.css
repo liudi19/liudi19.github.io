@@ -2091,3 +2091,232 @@ main {
         transform: translateX(0);
     }
 }
+
+/* 本科项目样式 */
+.program-overview {
+    background: var(--bg-white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-light);
+    margin-bottom: 3rem;
+}
+
+.overview-header {
+    background: var(--primary-gradient);
+    padding: 2rem;
+    color: white;
+    text-align: center;
+}
+
+.overview-subtitle {
+    color: rgba(255,255,255,0.9);
+    margin-top: 0.5rem;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.overview-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.overview-item i {
+    font-size: 2rem;
+    color: var(--primary-red);
+}
+
+.item-content h4 {
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.item-content p {
+    color: var(--text-gray);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* 专业设置样式 */
+.majors-section {
+    margin-bottom: 3rem;
+}
+
+.majors-section h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+}
+
+.majors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.major-card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-light);
+    transition: all 0.3s ease;
+}
+
+.major-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px var(--shadow-medium);
+}
+
+.major-header {
+    background: var(--primary-gradient);
+    padding: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.major-header i {
+    font-size: 1.5rem;
+}
+
+.major-list {
+    list-style: none;
+    padding: 1.5rem;
+}
+
+.major-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--text-gray);
+}
+
+.major-list li:last-child {
+    border-bottom: none;
+}
+
+.major-list .highlight {
+    color: var(--primary-red);
+    font-weight: 500;
+}
+
+/* 申请指南样式 */
+.application-guide-section {
+    margin-bottom: 3rem;
+}
+
+.application-guide-section h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.guide-card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.guide-header {
+    background: var(--primary-gradient);
+    padding: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.guide-header i {
+    font-size: 1.5rem;
+}
+
+.guide-list {
+    list-style: none;
+    padding: 1.5rem;
+}
+
+.guide-list li {
+    padding: 0.8rem 0;
+    color: var(--text-gray);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.guide-list li::before {
+    content: '•';
+    color: var(--primary-red);
+    font-weight: bold;
+}
+
+.process-steps {
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.step {
+    text-align: center;
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    background: var(--primary-gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.5rem;
+}
+
+.step p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .majors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .overview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .majors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
