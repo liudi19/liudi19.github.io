@@ -1619,36 +1619,89 @@ main {
 }
 
 .partner-image {
-    width: 100%;
+    position: relative;
     height: 200px;
     overflow: hidden;
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .partner-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+    width: auto;
+    height: auto;
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    transition: all 0.3s ease;
 }
 
 .partner-card:hover .partner-image img {
     transform: scale(1.05);
 }
 
-.partner-content {
+.partner-info {
     padding: 1.5rem;
+    background: var(--bg-white);
 }
 
-.partner-content h3 {
-    color: var(--primary-dark);
-    font-size: 1.2rem;
-    margin-bottom: 0.8rem;
-}
-
-.partner-content p {
+.partner-desc {
     color: var(--text-gray);
-    font-size: 0.9rem;
-    line-height: 1.6;
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+/* 主要合作伙伴（哈萨克国立大学）的特殊样式 */
+.partner-card.featured {
+    height: 300px;
+    background: linear-gradient(to right, var(--bg-light) 0%, white 100%);
+}
+
+.partner-card.featured .partner-image {
+    height: 300px;
+}
+
+.partner-card.featured .partner-image img {
+    max-width: 85%;
+    max-height: 85%;
+}
+
+/* 添加图片底部渐变效果 */
+.partner-card .partner-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, var(--bg-light) 0%, transparent 100%);
+    opacity: 0.8;
+}
+
+.partner-card.featured .partner-image::after {
+    display: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .partner-card .partner-image {
+        height: 180px;
+    }
+    
+    .partner-card.featured .partner-image {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .partner-card .partner-image {
+        height: 160px;
+    }
+    
+    .partner-card.featured .partner-image {
+        height: 200px;
+    }
 }
 
 /* 关于我们页面样式 */
@@ -2318,5 +2371,102 @@ main {
     .process-steps {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
+    }
+}
+
+/* 哈萨克合作伙伴样式 */
+.kazakh-partners {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.partner-card.featured {
+    grid-column: span 3;
+    display: flex;
+    background: var(--bg-white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.partner-card.featured .partner-image {
+    flex: 0 0 40%;
+    height: 300px;
+}
+
+.partner-card.featured .partner-info {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.partner-card.featured h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+.partner-details {
+    display: flex;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.partner-details span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-gray);
+}
+
+.partner-details i {
+    color: var(--primary-red);
+}
+
+.partner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-gradient);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    width: fit-content;
+    transition: all 0.3s ease;
+}
+
+.partner-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow-medium);
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .kazakh-partners {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .partner-card.featured {
+        grid-column: span 2;
+        flex-direction: column;
+    }
+
+    .partner-card.featured .partner-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .kazakh-partners {
+        grid-template-columns: 1fr;
+    }
+
+    .partner-card.featured {
+        grid-column: span 1;
     }
 }
