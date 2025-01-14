@@ -2439,3 +2439,178 @@ main {
         grid-column: span 1;
     }
 }
+
+/* 修改校园简介布局样式 */
+.intro-content {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
+
+.intro-text {
+    flex: 1;
+    padding: 2rem;
+    background: var(--bg-light);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.intro-video {
+    flex: 1;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.intro-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .intro-content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .intro-video {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .intro-video {
+        height: 250px;
+    }
+}
+
+/* Banner 样式优化 */
+.campus-banner {
+    position: relative;
+    height: 56vh;
+    margin-top: 60px;
+    overflow: hidden;
+}
+
+.banner-slider {
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.banner-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.banner-slide::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+}
+
+.banner-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 2;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.2);
+    border-color: var(--primary-red);
+}
+
+.dot:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+/* Banner 文字内容 */
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.banner-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.banner-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .campus-banner {
+        height: 49vh;
+    }
+
+    .banner-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .banner-content p {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .campus-banner {
+        height: 42vh;
+        margin-top: 50px;
+    }
+
+    .banner-content h1 {
+        font-size: 2rem;
+    }
+
+    .banner-content p {
+        font-size: 1rem;
+    }
+
+    .banner-dots {
+        bottom: 20px;
+    }
+}

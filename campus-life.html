@@ -24,12 +24,47 @@
         </div>
     </nav>
 
+    <!-- Banner 轮播部分 -->
+    <section class="campus-banner">
+        <div class="banner-slider">
+            <div class="banner-slide">
+                <img src="images/campus-banner/banner1.jpg" alt="校园风光 1">
+                <div class="banner-content">
+                    <h1>欢迎来到哈萨克国立大学</h1>
+                    <p>探索充满活力的校园生活，开启你的留学之旅</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/campus-banner/banner2.jpg" alt="校园风光 2">
+                <div class="banner-content">
+                    <h1>现代化的学习环境</h1>
+                    <p>优质的教育资源，完善的配套设施</p>
+                </div>
+            </div>
+            <div class="banner-slide">
+                <img src="images/campus-banner/banner3.jpg" alt="校园风光 3">
+                <div class="banner-content">
+                    <h1>多彩的校园文化</h1>
+                    <p>丰富的课外活动，国际化的交流平台</p>
+                </div>
+            </div>
+        </div>
+        <div class="banner-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </section>
+
     <!-- 主要内容区域 -->
     <main>
         <!-- 校园简介部分 -->
         <section class="campus-intro">
             <div class="section-container">
-                <h2>学校简介</h2>
+                <div class="section-header">
+                    <h2>学校简介</h2>
+                    <div class="section-subtitle">Al-Farabi Kazakh National University</div>
+                </div>
                 <div class="intro-content">
                     <div class="intro-text">
                         <p>哈萨克斯坦国立大学（Al-Farabi Kazakh National University）成立于1934年，是哈萨克斯坦历史最悠久、规模最大的综合性大学。学校位于阿拉木图市，拥有现代化的教学设施和优美的校园环境。</p>
@@ -173,5 +208,40 @@
             <p>&copy; 2024 哈萨克国立大学中国区招生办公室. 保留所有权利.</p>
         </div>
     </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slider = document.querySelector('.banner-slider');
+        const slides = document.querySelectorAll('.banner-slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        const slideCount = slides.length;
+
+        // 自动轮播
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slideCount;
+            updateSlider();
+        }
+
+        // 更新轮播位置和圆点状态
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        // 点击圆点切换轮播
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+            });
+        });
+
+        // 设置自动轮播间隔
+        setInterval(nextSlide, 5000);
+    });
+    </script>
 </body>
 </html> 
