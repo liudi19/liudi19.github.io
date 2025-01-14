@@ -2767,3 +2767,242 @@ main {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* 合作项目部分样式 */
+.cooperation-projects {
+    padding: 5rem 0;
+    background: var(--bg-light);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.project-card {
+    background: var(--bg-white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px var(--shadow-light);
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px var(--shadow-medium);
+}
+
+.project-card.featured {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-red));
+    color: white;
+}
+
+.project-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--bg-light);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.project-card.featured .project-icon {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.project-icon i {
+    font-size: 1.8rem;
+    color: var(--primary-red);
+}
+
+.project-card.featured .project-icon i {
+    color: white;
+}
+
+.project-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+.project-card.featured h3 {
+    color: white;
+}
+
+.project-desc {
+    color: var(--text-gray);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.project-card.featured .project-desc {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.project-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.project-features span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+.project-card.featured .project-features span {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.project-features i {
+    color: var(--primary-red);
+    font-size: 1.1rem;
+}
+
+.project-card.featured .project-features i {
+    color: white;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card {
+        padding: 2rem;
+    }
+
+    .project-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 合作项目表格样式 */
+.projects-table-wrapper {
+    margin-top: 3rem;
+    background: var(--bg-white);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px var(--shadow-light);
+    overflow: auto;
+}
+
+.projects-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.projects-table th {
+    background: var(--bg-light);
+    padding: 1.2rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--primary-dark);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.projects-table td {
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+}
+
+.school-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.school-info i {
+    color: var(--primary-red);
+    font-size: 1.2rem;
+}
+
+.school-info span {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* 合作类型标签 */
+.tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin: 0.2rem;
+    white-space: nowrap;
+}
+
+.tag.exclusive {
+    background: rgba(220, 53, 69, 0.1);
+    color: var(--primary-red);
+}
+
+.tag.specialized {
+    background: rgba(32, 201, 151, 0.1);
+    color: #20c997;
+}
+
+.tag.joint {
+    background: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+}
+
+/* 项目列表样式 */
+.project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+}
+
+.project-list li i {
+    color: var(--primary-red);
+    margin-top: 0.2rem;
+}
+
+/* 状态标签 */
+.status {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.status.active {
+    background: rgba(32, 201, 151, 0.1);
+    color: #20c997;
+}
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .projects-table-wrapper {
+        margin: 2rem -1rem 0;
+        border-radius: 0;
+    }
+}
