@@ -26,20 +26,11 @@
 
     <!-- 主要内容区域 -->
     <main>
-        <!-- 招生简章横幅 -->
-        <section class="admission-banner">
-            <div class="banner-content">
-                <h1>招生简章</h1>
-                <p>开启你的国际教育之旅</p>
-                <div class="banner-decoration"></div>
-            </div>
-        </section>
-
         <!-- 项目导航 -->
         <section class="program-nav">
             <div class="nav-container">
-                <a href="#preparatory" class="nav-item" data-target="preparatory-section">预科项目</a>
-                <a href="#undergraduate" class="nav-item active" data-target="undergraduate-section">本科项目</a>
+                <a href="#preparatory" class="nav-item active" data-target="preparatory-section">预科项目</a>
+                <a href="#undergraduate" class="nav-item" data-target="undergraduate-section">本科项目</a>
                 <a href="#master" class="nav-item" data-target="master-section">硕士项目</a>
                 <a href="#phd" class="nav-item" data-target="phd-section">博士项目</a>
                 <a href="#dba" class="nav-item" data-target="dba-section">DBA项目</a>
@@ -49,7 +40,7 @@
         <!-- 招生项目内容 -->
         <div class="programs-wrapper">
             <!-- 预科招生部分 -->
-            <section class="program-section" id="preparatory-section">
+            <section class="program-section active" id="preparatory-section">
                 <div class="program-content">
                     <!-- 预科项目概览卡片 -->
                     <div class="program-overview">
@@ -170,7 +161,7 @@
             </section>
 
             <!-- 本科招生部分 -->
-            <section class="program-section active" id="undergraduate-section">
+            <section class="program-section" id="undergraduate-section">
                 <div class="program-content">
                     <!-- 本科项目概览卡片 -->
                     <div class="program-overview">
@@ -662,6 +653,18 @@
         const navItems = document.querySelectorAll('.nav-item');
         const sections = document.querySelectorAll('.program-section');
 
+        // 确保页面加载时预科项目处于激活状态
+        const preparatoryNav = document.querySelector('[data-target="preparatory-section"]');
+        const preparatorySection = document.getElementById('preparatory-section');
+        
+        // 移除所有活动状态
+        navItems.forEach(nav => nav.classList.remove('active'));
+        sections.forEach(section => section.classList.remove('active'));
+        
+        // 设置预科项目为活动状态
+        preparatoryNav.classList.add('active');
+        preparatorySection.classList.add('active');
+
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -685,6 +688,4 @@
     });
     </script>
 </body>
-</html> 
-</html> 
 </html> 
