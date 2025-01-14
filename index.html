@@ -12,6 +12,9 @@
         <div class="logo">
             <img src="images/logo.jpg" alt="Al-Faribi大学标志">
         </div>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="nav-links-container">
             <ul class="nav-links">
                 <li><a href="index.html" class="active">主页</a></li>
@@ -413,5 +416,37 @@
             </div>
         </footer>
     </main>
+
+    <!-- 在页面底部添加 JavaScript -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinksContainer = document.querySelector('.nav-links-container');
+
+        menuToggle.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('active');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.navbar')) {
+                navLinksContainer.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+            }
+        });
+    });
+    </script>
 </body>
 </html> 
