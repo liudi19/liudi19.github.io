@@ -23,6 +23,11 @@ footer {
     margin-bottom: 0.5rem;
 }
 
+.footer-content .contact-info p,
+.footer-content .social-media p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .copyright {
     text-align: center;
     padding: 1rem;
@@ -31,6 +36,39 @@ footer {
 
 .copyright p {
     color: rgba(255, 255, 255, 0.9);
+}
+
+/* 社交媒体图标样式 */
+.social-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.social-icon .icon {
+    width: 32px;
+    height: 32px;
+}
+
+.qr-popup {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.social-icon:hover .qr-popup {
+    display: block;
+}
+
+.qr-popup img.qr-code {
+    width: 120px;
+    height: 120px;
 }
 
 /* 全局样式和变量 */
