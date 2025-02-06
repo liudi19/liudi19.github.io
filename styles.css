@@ -3297,8 +3297,11 @@ main {
 
 /* 申请页面样式 */
 .apply-section {
-    padding: 4rem 0;
+    padding: 6rem 0 4rem;
     background: var(--bg-light);
+    min-height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
 }
 
 .apply-header {
@@ -3322,9 +3325,10 @@ main {
     background: var(--bg-white);
     border-radius: 15px;
     box-shadow: 0 4px 20px var(--shadow-light);
-    padding: 2rem;
-    max-width: 800px;
+    padding: 3rem;
+    max-width: 1000px;
     margin: 0 auto;
+    position: relative;
 }
 
 .consultant-info {
@@ -3334,9 +3338,10 @@ main {
 }
 
 .consultant-avatar {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     flex-shrink: 0;
+    margin-right: 2rem;
 }
 
 .consultant-avatar img {
@@ -3351,9 +3356,9 @@ main {
 }
 
 .consultant-details h2 {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     color: var(--primary-dark);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .consultant-details .title {
@@ -3369,9 +3374,9 @@ main {
 .contact-info p {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
     color: var(--primary-dark);
 }
 
@@ -3386,7 +3391,8 @@ main {
 
 .contact-buttons {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .contact-button {
@@ -3416,15 +3422,45 @@ main {
     background: #07C160;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .consultant-info {
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
 
+    .consultant-avatar {
+        margin-right: 0;
+        margin-bottom: 2rem;
+        width: 250px;
+        height: 250px;
+    }
+
     .contact-info p {
         justify-content: center;
+    }
+
+    .consultant-details {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .consultant-card {
+        padding: 1.5rem;
+    }
+
+    .consultant-avatar {
+        width: 200px;
+        height: 200px;
+    }
+
+    .consultant-details h2 {
+        font-size: 1.8rem;
+    }
+
+    .contact-info p {
+        font-size: 1.1rem;
     }
 
     .contact-buttons {
