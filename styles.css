@@ -1,3 +1,38 @@
+/* 页脚样式 */
+footer {
+    background: var(--primary-dark);
+    padding: 2rem 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-content h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.footer-content p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+}
+
+.copyright {
+    text-align: center;
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 /* 全局样式和变量 */
 :root {
     --primary-gradient: linear-gradient(135deg, #1a2a6c, #b21f1f);
@@ -2414,8 +2449,223 @@ main {
     box-shadow: 0 4px 15px var(--shadow-medium);
 }
 
+/* 招生简章页面样式优化 */
+.program-section {
+    padding: 2rem;
+    background: var(--bg-light);
+    margin: 1rem 0;
+    border-radius: 15px;
+}
+
+.program-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+}
+
+.overview-item {
+    padding: 1.5rem;
+    text-align: center;
+    background: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.overview-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+/* 申请材料样式 */
+.materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.material-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: var(--bg-white);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.material-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+.material-item i {
+    font-size: 2rem;
+    color: var(--primary-dark);
+}
+
+.material-item p {
+    font-weight: 500;
+    margin: 0;
+}
+
+.material-note {
+    font-size: 0.8rem;
+    color: var(--text-gray);
+}
+
+/* 申请流程样式 */
+.application-process {
+    margin-top: 3rem;
+}
+
+.process-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 2rem;
+    position: relative;
+    padding: 2rem 0;
+}
+
+.process-steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    right: 60px;
+    height: 2px;
+    background: var(--primary-dark);
+    z-index: 0;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    flex: 1;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-gradient);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.step-content h5 {
+    margin: 0;
+    color: var(--primary-dark);
+    font-size: 1.1rem;
+}
+
+.step-content p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+/* 院系专业样式 */
+.department-card {
+    background: var(--bg-white);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-medium);
+}
+
+.department-name {
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-red);
+}
+
+.major-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.major-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--shadow-light);
+}
+
+.major-list li:last-child {
+    border-bottom: none;
+}
+
 /* 响应式调整 */
 @media (max-width: 992px) {
+    .overview-grid,
+    .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .process-steps {
+        flex-direction: column;
+    }
+
+    .process-steps::before {
+        display: none;
+    }
+
+    .step {
+        width: 100%;
+    }
+
     .kazakh-partners {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -3004,6 +3254,143 @@ main {
     .projects-table-wrapper {
         margin: 2rem -1rem 0;
         border-radius: 0;
+    }
+}
+
+/* 申请页面样式 */
+.apply-section {
+    padding: 4rem 0;
+    background: var(--bg-light);
+}
+
+.apply-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.apply-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+}
+
+.reminder {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-bottom: 2rem;
+}
+
+.consultant-card {
+    background: var(--bg-white);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px var(--shadow-light);
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.consultant-info {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.consultant-avatar {
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+}
+
+.consultant-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.consultant-details {
+    flex: 1;
+}
+
+.consultant-details h2 {
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+.consultant-details .title {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+}
+
+.contact-info {
+    margin-bottom: 1.5rem;
+}
+
+.contact-info p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+}
+
+.contact-info i {
+    color: var(--primary-dark);
+}
+
+.consultant-description p {
+    margin-bottom: 0.5rem;
+    color: var(--text-gray);
+}
+
+.contact-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.contact-button {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.contact-button:hover {
+    transform: translateY(-2px);
+}
+
+.contact-button.phone {
+    background: var(--primary-gradient);
+}
+
+.contact-button.wechat {
+    background: #07C160;
+}
+
+@media (max-width: 768px) {
+    .consultant-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .contact-info p {
+        justify-content: center;
+    }
+
+    .contact-buttons {
+        flex-direction: column;
     }
 }
 
