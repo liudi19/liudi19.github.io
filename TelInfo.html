@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电话信息 - 哈萨克国立大学(Al-Faribi)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .tel-info-section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tel-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tel-table th,
+        .tel-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tel-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .tel-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .tel-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .tel-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航菜单 -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpg" alt="Al-Faribi大学标志">
+        </div>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a href="index.html">主页</a></li>
+                <li><a href="campus-life.html">校园生活</a></li>
+                <li><a href="partners.html">合作伙伴</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <section class="tel-info-section">
+            <h2>电话信息记录</h2>
+            <table class="tel-table">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>电话号码</th>
+                        <th>邮箱</th>
+                        <th>申请学位</th>
+                        <th>申请时间</th>
+                    </tr>
+                </thead>
+                <tbody id="telInfoTableBody">
+                    <tr>
+                        <td colspan="5" class="no-data">暂无数据</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>联系我们</h3>
+                <p>电话：+86 133 8751 6226</p>
+                <p>邮箱：QA@qisi.asia</p>
+                <p>地址：山东省济南市历城区经十东路28666号(济南超算中心科技园二期4号楼6层)</p>
+            </div>
+            <div class="social-media">
+                <h3>关注我们</h3>
+                <div class="social-links">
+                    <div class="social-icon">
+                        <img src="images/wechat-icon.png" alt="微信" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/wechat.png" alt="微信二维码" class="qr-code">
+                        </div>
+                    </div>
+                    <div class="social-icon">
+                        <img src="images/xiaohongshu-icon.png" alt="小红书" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/xiaohongshu.png" alt="小红书二维码" class="qr-code">
+                        </div>
+                    </div>
+                    <div class="social-icon">
+                        <img src="images/douyin-icon.png" alt="抖音" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/douyin.png" alt="抖音二维码" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>&copy; 2024 哈萨克国立大学中国区招生办公室. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        function displayApplications() {
+            const tableBody = document.getElementById('telInfoTableBody');
+            const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+            
+            if (applications.length > 0) {
+                tableBody.innerHTML = applications.map(app => `
+                    <tr>
+                        <td>${app.name}</td>
+                        <td>${app.phone}</td>
+                        <td>${app.email}</td>
+                        <td>${app.degree}</td>
+                        <td>${app.timestamp}</td>
+                    </tr>
+                `).join('');
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="5" class="no-data">暂无数据</td></tr>';
+            }
+        }
+
+        // 页面加载时显示数据
+        displayApplications();
+
+        // 每5秒自动刷新一次
+        setInterval(displayApplications, 5000);
+    </script>
+</body>
+</html>
