@@ -321,7 +321,7 @@
                                     onchange="toggleHot('${question.id}', this.checked)">
                                 <span class="slider"></span>
                             </label>
-                            <span class="visibility-label">${question.isHot ? '热问题' : '普通'}</span>
+                            <span class="visibility-label">${question.isHot ? '关注热点' : '普通'}</span>
                         </div>
                     </td>
                     <td class="action-buttons">
@@ -395,7 +395,7 @@
 
             // 更新热点文本
             const hotLabel = event.target.closest('.visibility-control').querySelector('.visibility-label');
-            hotLabel.textContent = isHot ? '热问题' : '普通';
+            hotLabel.textContent = isHot ? '关注热点' : '普通';
 
             saveQAData();
             loadQuestions(); // 重新加载列表
