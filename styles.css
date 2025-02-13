@@ -3793,7 +3793,7 @@ main {
     }
 
     .menu-toggle {
-        display: block;
+        display: flex;
     }
 
     .nav-links-container {
@@ -3820,22 +3820,26 @@ main {
     }
 
     .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        background: var(--bg-white);
         flex-direction: column;
-        gap: 0;
+        padding: 1rem 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: all 0.3s ease;
     }
 
     .nav-links li {
         width: 100%;
+        text-align: center;
     }
 
     .nav-links a {
-        padding: 1.2rem;
-        width: 100%;
         display: block;
-        text-align: center;
-        border-radius: 8px;
-        font-size: 1.1rem;
-        font-weight: 500;
+        padding: 1rem;
         color: var(--text-dark);
     }
 
@@ -3844,8 +3848,8 @@ main {
     }
 
     .nav-links a.active {
-        background: var(--primary-red);
-        color: white;
+        transform: translateY(0);
+        opacity: 1;
     }
 }
 
