@@ -218,8 +218,7 @@
         <i class="fas fa-edit"></i> 我要留言
     </button>
 
-    <!-- 添加模态框 -->
-    <!-- 删除这个模态框部分 -->
+   
         
     <script src="qa-data.js"></script>
     <script>
@@ -300,5 +299,218 @@
 
         // 删除 closeAskModal 和 submitQuestion 函数
     </script>
+        </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>联系我们</h3>
+                <p>电话：+86 133 8751 6226</p>
+                <p>邮箱：QA@qisi.asia</p>
+                <p>地址：山东省济南市历城区经十东路28666号(济南超算中心科技园二期4号楼6层)</p>
+            </div>
+            <div class="social-media">
+                <h3>关注我们</h3>
+                <div class="social-links">
+                    <div class="social-icon">
+                        <img src="images/wechat-icon.png" alt="微信" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/wechat.png" alt="微信二维码" class="qr-code">
+                        </div>
+                    </div>
+                    <div class="social-icon">
+                        <img src="images/xiaohongshu-icon.png" alt="小红书" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/xiaohongshu.png" alt="小红书二维码" class="qr-code">
+                        </div>
+                    </div>
+                    <div class="social-icon">
+                        <img src="images/douyin-icon.png" alt="抖音" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/douyin.png" alt="抖音二维码" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 哈萨克国立大学中国区招生办公室. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <!-- 问题提交模态框 -->
+    <div id="askModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeAskModal()">&times;</span>
+            <h2>提交问题</h2>
+            <form id="askForm" onsubmit="submitQuestion(event)">
+                <div class="form-group">
+                    <label for="title">问题标题</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">问题描述</label>
+                    <textarea id="content" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="author">姓名</label>
+                    <input type="text" id="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactInfo">联系方式（急需回复请填写）</label>
+                    <input type="text" id="contactInfo">
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-submit">提交问题</button>
+                    <button type="button" class="btn-cancel" onclick="closeAskModal()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-submit,
+        .btn-cancel {
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            flex: 1;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+        }
+
+        .btn-cancel {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+    </style>
+
+    <script>
+        function openAskModal() {
+            const modal = document.getElementById('askModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closeAskModal() {
+            const modal = document.getElementById('askModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        function submitQuestion(event) {
+            event.preventDefault();
+            
+            const newQuestion = {
+                title: document.getElementById('title').value,
+                content: document.getElementById('content').value,
+                author: document.getElementById('author').value,
+                contactInfo: document.getElementById('contactInfo').value,
+                date: new Date().toISOString().split('T')[0],
+                isVisible: true,
+                views: 0
+            };
+
+            // 添加新问题
+            addNewQuestion(newQuestion);
+            
+            // 重置表单并关闭模态框
+            document.getElementById('askForm').reset();
+            closeAskModal();
+            
+            // 显示提交成功提示
+            alert('问题提交成功！管理员会尽快回复。');
+            
+            // 重新加载问题列表
+            loadAllQuestions();
+        }
+    </script>
+    <script src="qa-data.js"></script>
 </body>
 </html>
