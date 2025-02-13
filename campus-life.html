@@ -132,7 +132,7 @@
                         </div>
                         <div class="life-content">
                             <h3><i class="fas fa-comments"></i> 高层次交流</h3>
-                            <p>哈国立是国家最重要的大学，也是哈萨克投资最多的学校，深受欧美的认可，与欧美大学有大量的交流。</p>
+                            <p>哈国立是国家重要的大学，也是哈萨克投资最多的学校，深受欧美的认可，与欧美大学有大量的交流。</p>
                             <ul class="life-features">
                                 <li><i class="fas fa-check-circle"></i> 国际学术会议</li>
                                 <li><i class="fas fa-check-circle"></i> 名师讲座</li>
@@ -282,46 +282,38 @@
             <p>&copy; 2024 哈萨克国立大学中国区招生办公室. 保留所有权利.</p>
         </div>
     </footer>
-
-    <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         // 移动端菜单切换
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            document.querySelector('.nav-links-container').classList.toggle('active');
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinksContainer = document.querySelector('.nav-links-container');
+
+        menuToggle.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('active');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
 
-        // 轮播图相关
-        const slider = document.querySelector('.banner-slider');
-        const slides = document.querySelectorAll('.banner-slide');
-        const dots = document.querySelectorAll('.dot');
-        let currentSlide = 0;
-        const slideCount = slides.length;
-
-        // 自动轮播
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slideCount;
-            updateSlider();
-        }
-
-        // 更新轮播位置和圆点状态
-        function updateSlider() {
-            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-        }
-
-        // 点击圆点切换轮播
-        dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                updateSlider();
+        // 点击导航链接时关闭菜单
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
             });
         });
 
-        // 设置自动轮播间隔
-        setInterval(nextSlide, 5000);
+        // 点击页面其他区域时关闭菜单
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.navbar')) {
+                navLinksContainer.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+            }
+        });
     });
-    </script>
+</script>
+    
 </body>
-</html> 
+</html>
