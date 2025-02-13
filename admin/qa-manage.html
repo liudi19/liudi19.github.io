@@ -130,6 +130,62 @@
             gap: 0.5rem;
         }
 
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
         @media (max-width: 768px) {
             .question-list {
                 padding: 1rem;
@@ -461,11 +517,38 @@
         function openModal() {
             const modal = document.getElementById('qaModal');
             modal.style.display = 'flex';
-            // 使用 setTimeout 确保过渡效果正常工作
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
+            // 触发重排以启动动画
+            modal.offsetHeight;
+            modal.classList.add('show');
         }
+
+        function closeModal() {
+            const modal = document.getElementById('qaModal');
+            modal.classList.remove('show');
+            // 等待动画完成后隐藏模态框
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // 保存QA数据到localStorage
+        function saveQAData() {
+            localStorage.setItem('qaData', JSON.stringify(qaData));
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuestions();
+            document.getElementById('qaFormModal').addEventListener('submit', saveQuestion);
+        });
+
+        // 关闭模态框的点击事件
+        window.onclick = function(event) {
+            const modal = document.getElementById('qaModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
 
         // 关闭模态框
         function closeModal() {
