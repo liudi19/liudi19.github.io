@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问题详情 - 哈萨克国立大学(Al-Faribi)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="qa-data.js" defer></script>
+    <style>
+        .qa-detail-section {
+            background: var(--bg-light);
+            padding: 4rem 0;
+            min-height: calc(100vh - 300px);
+        }
+
+        .qa-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-gray);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-red);
+        }
+
+        .question-detail h2 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            line-height: 1.4;
+        }
+
+        .meta-info {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .question-content {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .answer-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .answer-section::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+            border-left: 1rem solid transparent;
+            border-right: 1rem solid transparent;
+            border-bottom: 1rem solid #f8f9fa;
+        }
+
+        .answer-section h3 {
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .answer-content {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .answer-meta {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            text-align: right;
+            border-top: 1px solid #e9ecef;
+            padding-top: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .qa-detail-section {
+                padding: 2rem 1rem;
+            }
+
+            .qa-detail-container {
+                padding: 1.5rem;
+            }
+
+            .question-detail h2 {
+                font-size: 1.5rem;
+            }
+
+            .meta-info {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航菜单 -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpg" alt="Al-Faribi大学标志">
+        </div>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a href="index.html">主页</a></li>
+                <li><a href="campus-life.html">校园生活</a></li>
+                <li><a href="partners.html">合作伙伴</a></li>
+                <li><a href="qa.html" class="active">Q&A</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 问题详情部分 -->
+    <section class="qa-detail-section">
+        <div class="container">
+            <div class="qa-detail-container">
+                <a href="qa.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> 
+                    返回问题列表
+                </a>
+                <div class="question-detail">
+                    <h2 id="questionTitle"></h2>
+                    <div class="meta-info">
+                        <span class="date">
+                            <i class="far fa-calendar-alt"></i>
+                            <span id="questionDate"></span>
+                        </span>
+                        <span class="author">
+                            <i class="far fa-user"></i>
+                            <span id="questionAuthor"></span>
+                        </span>
+                        <span class="views">
+                            <i class="far fa-eye"></i>
+                            <span id="questionViews"></span>
+                        </span>
+                    </div>
+                    <div class="question-content" id="questionContent"></div>
+                    <div class="answer-section" id="answerSection">
+                        <h3>
+                            <i class="fas fa-comment-dots"></i>
+                            管理员回复
+                        </h3>
+                        <div class="answer-content" id="answerContent"></div>
+                        <div class="answer-meta">
+                            <span class="date">
+                                <i class="far fa-clock"></i>
+                                回复时间：<span id="answerDate"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links-container').classList.toggle('active');
+        });
+
+        // 获取URL参数
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // 格式化内容（处理换行符和列表）
+        function formatContent(content) {
+            if (!content) return '';
+            return content.split('\n').map(line => {
+                if (line.startsWith('- ')) {
+                    return `<li>${line.substring(2)}</li>`;
+                }
+                return `<p>${line}</p>`;
+            }).join('');
+        }
+
+        // 加载问题详情
+        function loadQuestionDetail() {
+            const questionId = getQueryParam('id');
+            if (!questionId) {
+                window.location.href = 'qa.html';
+                return;
+            }
+
+            // 从所有问题类别中查找
+            const categories = ['hotQuestions', 'answeredQuestions', 'pendingQuestions'];
+            let question = null;
+
+            for (const category of categories) {
+                question = qaData[category].find(q => q.id === questionId);
+                if (question) break;
+            }
+
+            if (!question) {
+                window.location.href = 'qa.html';
+                return;
+            }
+
+            // 更新页面标题
+            document.title = `${question.title} - 问题详情`;
+
+            // 填充问题信息
+            document.getElementById('questionTitle').textContent = question.title;
+            document.getElementById('questionDate').textContent = question.date;
+            document.getElementById('questionAuthor').textContent = question.author || '匿名';
+            document.getElementById('questionViews').textContent = question.views || 0;
+            document.getElementById('questionContent').innerHTML = formatContent(question.content);
+
+            // 处理答案部分
+            const answerSection = document.getElementById('answerSection');
+            if (question.answer) {
+                document.getElementById('answerContent').innerHTML = formatContent(question.answer.content);
+                document.getElementById('answerDate').textContent = question.answer.date;
+                answerSection.style.display = 'block';
+            } else {
+                answerSection.style.display = 'none';
+            }
+
+            // 更新浏览量
+            if (typeof question.views === 'number') {
+                question.views++;
+                localStorage.setItem('qaData', JSON.stringify(qaData));
+            }
+        }
+
+        // 页面加载完成后加载问题详情
+        document.addEventListener('DOMContentLoaded', loadQuestionDetail);
+    </script>
+</body>
+</html>

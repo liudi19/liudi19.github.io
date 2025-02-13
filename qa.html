@@ -6,6 +6,7 @@
     <title>常见问题 - 哈萨克国立大学(Al-Faribi)</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="qa-data.js" defer></script>
 </head>
 <body>
     <!-- 导航菜单 -->
@@ -31,12 +32,6 @@
     <main>
         <section class="qa-section">
             <div class="section-container">
-                <div class="qa-header">
-                    <h2>问答留言板</h2>
-                    <button class="ask-question-btn" onclick="showQuestionForm()">
-                        <i class="fas fa-edit"></i> 我要留言
-                    </button>
-                </div>
 
                 <!-- 提问表单 -->
                 <div id="questionForm" class="question-form" style="display: none;">
@@ -51,7 +46,11 @@
                             <textarea id="questionContent" rows="4" required></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="contactInfo">联系方式（选填）</label>
+                            <label for="userName">姓名</label>
+                            <input type="text" id="userName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactInfo">联系方式（如急需回复，请留下信息）</label>
                             <input type="text" id="contactInfo" placeholder="邮箱或电话">
                         </div>
                         <div class="form-buttons">
@@ -63,101 +62,37 @@
 
                 <!-- 热点问题 -->
                 <div class="qa-category hot-questions">
-                    <h3><i class="fas fa-fire"></i> 热点问题</h3>
-                    <div class="qa-list">
-                        <div class="qa-item hot">
-                            <div class="question">
-                                <h4>留学生可以申请奖学金吗？</h4>
-                                <div class="meta-info">
-                                    <span class="views"><i class="fas fa-eye"></i> 1280</span>
-                                    <span class="date">2024-02-10</span>
-                                </div>
-                                <div class="answer">
-                                    <p>是的，我校为国际学生提供多种奖学金计划：</p>
-                                    <ul>
-                                        <li>学术优秀奖学金：覆盖100%学费</li>
-                                        <li>文化交流奖学金：覆盖50%学费</li>
-                                        <li>语言进步奖学金：提供语言课程补贴</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <h3><i class="fas fa-fire"></i> 关注热点</h3>
+                    <div class="qa-list" id="hotQuestionsList">
+                        <!-- 热点问题将通过JavaScript动态加载 -->
                     </div>
                 </div>
 
                 <!-- 已回复问题 -->
                 <div class="qa-category answered-questions">
-                    <h3><i class="fas fa-check-circle"></i> 已回复问题</h3>
-                    <div class="qa-list">
-                        <div class="qa-item answered">
-                            <div class="question">
-                                <h4>申请材料需要公证吗？</h4>
-                                <div class="meta-info">
-                                    <span class="author">张同学</span>
-                                    <span class="date">2024-02-08</span>
-                                </div>
-                                <p>我想问一下提交的成绩单和毕业证是否需要公证？</p>
-                                <div class="answer">
-                                    <div class="answer-header">
-                                        <span class="admin-tag">管理员回复</span>
-                                        <span class="date">2024-02-09</span>
-                                    </div>
-                                    <p>是的，所有学历文件都需要公证，具体要求如下：</p>
-                                    <ul>
-                                        <li>成绩单需要中文和英文公证</li>
-                                        <li>毕业证需要中文和英文公证</li>
-                                        <li>公证材料需要在半年有效期内</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <h3><i class="fas fa-check-circle"></i> 已回复</h3>
+                    <div class="qa-list" id="answeredQuestionsList">
+                        <!-- 已回复问题将通过JavaScript动态加载 -->
                     </div>
                 </div>
 
                 <!-- 待回复问题 -->
                 <div class="qa-category pending-questions">
-                    <h3><i class="fas fa-clock"></i> 待回复问题</h3>
-                    <div class="qa-list">
-                        <div class="qa-item pending">
-                            <div class="question">
-                                <h4>关于住宿安排的问题</h4>
-                                <div class="meta-info">
-                                    <span class="author">李同学</span>
-                                    <span class="date">2024-02-12</span>
-                                </div>
-                                <p>请问学校宿舍是几人间？有独立卫浴吗？</p>
-                                <div class="status-tag">等待回复</div>
-                            </div>
-                        </div>
+                    <h3><i class="fas fa-clock"></i> 待回复</h3>
+                    <div class="qa-list" id="pendingQuestionsList">
+                        <!-- 待回复问题将通过JavaScript动态加载 -->
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- 页脚 -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>联系我们</h3>
-                <p><i class="fas fa-phone"></i> +7 (727) 377-33-33</p>
-                <p><i class="fas fa-envelope"></i> info@kaznu.kz</p>
-                <p><i class="fas fa-map-marker-alt"></i> 阿拉木图市，哈萨克斯坦</p>
-            </div>
-            <div class="footer-section">
-                <h3>关注我们</h3>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 哈萨克国立大学(Al-Faribi). All rights reserved.</p>
-        </div>
-    </footer>
+    <!-- 固定的留言按钮 -->
+    <button class="ask-question-btn floating" onclick="showQuestionForm()">
+        <i class="fas fa-edit"></i> 我要留言
+    </button>
+
+
 
     <!-- JavaScript -->
     <script>
@@ -165,6 +100,162 @@
         document.querySelector('.menu-toggle').addEventListener('click', function() {
             document.querySelector('.nav-links-container').classList.toggle('active');
         });
+
+        // 问题表单显示与隐藏
+        function showQuestionForm() {
+            document.getElementById('questionForm').style.display = 'block';
+            window.scrollTo({
+                top: document.getElementById('questionForm').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+
+        function hideQuestionForm() {
+            document.getElementById('questionForm').style.display = 'none';
+        }
+
+        // 创建问题HTML
+        function createQuestionHTML(question) {
+            return `
+                <div class="qa-item" data-id="${question.id}">
+                    <div class="question-title">
+                        <a href="qa-detail.html?id=${question.id}">${question.title}</a>
+                    </div>
+                    <div class="question-content">${question.content}</div>
+                    <div class="meta-info">${question.date}</div>
+                </div>
+            `;
+        }
+
+        // 格式化内容
+        function formatContent(content) {
+            if (!content) return '';
+            return content.replace(/\n/g, '<br>');
+        }
+
+
+
+        // 加载问题列表
+        function loadQuestions() {
+            // 热点问题
+            const hotQuestionsHTML = qaData.hotQuestions
+                .filter(q => q.isVisible)
+                .map(createQuestionHTML)
+                .join('');
+            document.getElementById('hotQuestionsList').innerHTML = hotQuestionsHTML;
+
+            // 已回复问题
+            const answeredQuestionsHTML = qaData.answeredQuestions
+                .filter(q => q.isVisible)
+                .map(createQuestionHTML)
+                .join('');
+            document.getElementById('answeredQuestionsList').innerHTML = answeredQuestionsHTML;
+
+            // 待回复问题
+            const pendingQuestionsHTML = qaData.pendingQuestions
+                .filter(q => q.isVisible)
+                .map(createQuestionHTML)
+                .join('');
+            document.getElementById('pendingQuestionsList').innerHTML = pendingQuestionsHTML;
+        }
+
+        // 处理问题提交
+        document.getElementById('newQuestionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 获取表单数据
+            const title = document.getElementById('questionTitle').value;
+            const content = document.getElementById('questionContent').value;
+            const userName = document.getElementById('userName').value;
+            const contact = document.getElementById('contactInfo').value;
+
+            // 创建新问题
+            const newQuestion = addNewQuestion({
+                title,
+                content,
+                author: userName,
+                contactInfo: contact
+            });
+
+            // 重新加载问题列表
+            loadQuestions();
+            
+            // 清空表单并隐藏
+            this.reset();
+            hideQuestionForm();
+
+            // 显示提示
+            alert('问题提交成功！管理员会尽快回复。');
+        });
+
+        // 页面加载完成后加载问题
+        document.addEventListener('DOMContentLoaded', loadQuestions);
+
+        // 移动端菜单切换
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinksContainer = document.querySelector('.nav-links-container');
+
+        menuToggle.addEventListener('click', function() {
+            navLinksContainer.classList.toggle('active');
+            const icon = this.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        const navLinks = document.querySelectorAll('.nav-links a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.navbar')) {
+                navLinksContainer.classList.remove('active');
+                menuToggle.querySelector('i').classList.remove('fa-times');
+                menuToggle.querySelector('i').classList.add('fa-bars');
+            }
+        });
     </script>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <h3>联系我们</h3>
+                <p>电话：+86 133 8751 6226</p>
+                <p>邮箱：QA@qisi.asia</p>
+                <p>地址：山东省济南市历城区经十东路28666号(济南超算中心科技园二期4号楼6层)</p>
+            </div>
+            <div class="social-media">
+                <h3>关注我们</h3>
+                <div class="social-links">
+                    <div class="social-icon">
+                        <img src="images/wechat-icon.png" alt="微信" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/wechat.png" alt="微信二维码" class="qr-code">
+                        </div>
+                    </div>
+                    <div class="social-icon">
+                        <img src="images/xiaohongshu-icon.png" alt="小红书" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/xiaohongshu.png" alt="小红书二维码" class="qr-code">
+                        </div>
+                    </div>
+                    <div class="social-icon">
+                        <img src="images/douyin-icon.png" alt="抖音" class="icon">
+                        <div class="qr-popup">
+                            <img src="images/douyin.png" alt="抖音二维码" class="qr-code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 哈萨克国立大学中国区招生办公室. 保留所有权利.</p>
+        </div>
+    </footer>
 </body>
 </html>

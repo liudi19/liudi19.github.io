@@ -13,11 +13,15 @@
         <div class="logo">
             <img src="images/logo.jpg" alt="Al-Faribi大学标志">
         </div>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
         <div class="nav-links-container">
             <ul class="nav-links">
                 <li><a href="index.html">主页</a></li>
                 <li><a href="campus-life.html" class="active">校园生活</a></li>
                 <li><a href="partners.html">合作伙伴</a></li>
+                <li><a href="qa.html">Q&A</a></li>
                 <li><a href="about.html">关于我们</a></li>
             </ul>
         </div>
@@ -281,6 +285,12 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // 移动端菜单切换
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links-container').classList.toggle('active');
+        });
+
+        // 轮播图相关
         const slider = document.querySelector('.banner-slider');
         const slides = document.querySelectorAll('.banner-slide');
         const dots = document.querySelectorAll('.dot');

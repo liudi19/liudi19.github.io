@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问答管理 - 管理员界面</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script>
+        // 检查登录状态
+        function checkLogin() {
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // 页面加载时检查登录状态
+        document.addEventListener('DOMContentLoaded', checkLogin);
+    </script>
+    <style>
+        .admin-header {
+            background: var(--primary-dark);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* 新增的问题列表样式 */
+        .question-list {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .qa-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .qa-table th,
+        .qa-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .qa-table th {
+            background-color: var(--primary-dark);
+            color: white;
+            font-weight: 500;
+        }
+
+        .qa-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .qa-table .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-badge.answered {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-badge.pending {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .visibility-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .question-list {
+                padding: 1rem;
+            }
+
+            .qa-table th,
+            .qa-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1>问答管理</h1>
+        <div class="header-buttons">
+            <button class="btn-danger" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> 退出登录
+            </button>
+            <a href="../qa.html" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> 返回前台
+            </a>
+        </div>
+        <script>
+            function logout() {
+                sessionStorage.removeItem('isLoggedIn');
+                window.location.href = 'login.html';
+            }
+        </script>
+    </header>
+
+    
+        <div class="question-list">
+            <table class="qa-table">
+                <thead>
+                    <tr>
+                        <th>问题标题</th>
+                        <th>提问人</th>
+                        <th>提问时间</th>
+                        <th>状态</th>
+                        <th>显示</th>
+                        <th>热点</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="qaTableBody">
+                    <!-- 问题列表将通过JavaScript动态加载 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 回答/编辑模态框 -->
+    <div id="qaModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">回答问题</h2>
+            <form id="qaFormModal">
+                <input type="hidden" id="questionId">
+                <div class="form-group">
+                    <label for="questionTitleModal">问题标题</label>
+                    <input type="text" id="questionTitleModal" required>
+                </div>
+                <div class="form-group">
+                    <label for="questionContentModal">问题内容</label>
+                    <textarea id="questionContentModal" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="authorNameModal">提问人</label>
+                    <input type="text" id="authorNameModal" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="contactInfoModal">联系方式</label>
+                    <input type="text" id="contactInfoModal" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="answerContentModal">回答内容</label>
+                    <textarea id="answerContentModal"></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../qa-data.js"></script>
+    <script>
+        let currentQuestionId = null;
+
+        // 加载问题列表
+        function loadQuestions() {
+            const tableBody = document.getElementById('qaTableBody');
+            tableBody.innerHTML = '';
+
+            // 合并所有问题
+            const allQuestions = [
+                ...qaData.hotQuestions,
+                ...qaData.answeredQuestions,
+                ...qaData.pendingQuestions
+            ];
+
+            allQuestions.forEach(question => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${question.title}</td>
+                    <td>${question.author}</td>
+                    <td>${question.date}</td>
+                    <td>
+                        <span class="status-badge ${question.answer ? 'answered' : 'pending'}">
+                            ${question.answer ? '已回复' : '待回复'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="visibility-control">
+                            <label class="switch">
+                                <input type="checkbox" ${question.isVisible ? 'checked' : ''} 
+                                    onchange="toggleVisibility('${question.id}', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="visibility-label">${question.isVisible ? '显示' : '隐藏'}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="visibility-control">
+                            <label class="switch">
+                                <input type="checkbox" ${question.isHot ? 'checked' : ''} 
+                                    onchange="toggleHot('${question.id}', this.checked)">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="visibility-label">${question.isHot ? '热问题' : '普通'}</span>
+                        </div>
+                    </td>
+                    <td class="action-buttons">
+                        ${!question.answer ? `
+                            <button class="btn btn-success" onclick="answerQuestion('${question.id}')">
+                                <i class="fas fa-reply"></i> 回答
+                            </button>
+                        ` : ''}
+                        <button class="btn btn-primary" onclick="editQuestion('${question.id}')">
+                            <i class="fas fa-edit"></i> 编辑
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteQuestion('${question.id}')">
+                            <i class="fas fa-trash"></i> 删除
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // 切换问题可见性
+        function toggleVisibility(questionId, isVisible) {
+            const categories = ['hotQuestions', 'answeredQuestions', 'pendingQuestions'];
+            let updated = false;
+
+            categories.forEach(category => {
+                const questionIndex = qaData[category].findIndex(q => q.id === questionId);
+                if (questionIndex !== -1) {
+                    qaData[category][questionIndex].isVisible = isVisible;
+                    updated = true;
+                    
+                    // 更新显示/隐藏文本
+                    const visibilityLabel = event.target.closest('.visibility-control').querySelector('.visibility-label');
+                    visibilityLabel.textContent = isVisible ? '显示' : '隐藏';
+                }
+            });
+
+            if (updated) {
+                saveQAData();
+                loadQuestions(); // 重新加载列表以更新显示状态
+            }
+        }
+
+        // 切换热点问题状态
+        function toggleHot(questionId, isHot) {
+            const question = findQuestion(questionId);
+            if (!question) return;
+
+            // 如果要设为热问题，需要先从原来的分类中移除
+            if (isHot) {
+                // 从原来的分类中移除
+                ['answeredQuestions', 'pendingQuestions'].forEach(category => {
+                    const index = qaData[category].findIndex(q => q.id === questionId);
+                    if (index !== -1) {
+                        const removedQuestion = qaData[category].splice(index, 1)[0];
+                        removedQuestion.isHot = true;
+                        qaData.hotQuestions.unshift(removedQuestion);
+                    }
+                });
+            } else {
+                // 从热问题中移除
+                const index = qaData.hotQuestions.findIndex(q => q.id === questionId);
+                if (index !== -1) {
+                    const removedQuestion = qaData.hotQuestions.splice(index, 1)[0];
+                    removedQuestion.isHot = false;
+                    // 根据问题状态移动到相应分类
+                    const targetCategory = removedQuestion.answer ? 'answeredQuestions' : 'pendingQuestions';
+                    qaData[targetCategory].unshift(removedQuestion);
+                }
+            }
+
+            // 更新热点文本
+            const hotLabel = event.target.closest('.visibility-control').querySelector('.visibility-label');
+            hotLabel.textContent = isHot ? '热问题' : '普通';
+
+            saveQAData();
+            loadQuestions(); // 重新加载列表
+        }
+
+        // 编辑问题
+        function editQuestion(questionId) {
+            currentQuestionId = questionId;
+            const question = findQuestion(questionId);
+            if (question) {
+                document.getElementById('modalTitle').textContent = '编辑问题';
+                document.getElementById('questionId').value = questionId;
+                document.getElementById('questionTitleModal').value = question.title;
+                document.getElementById('questionContentModal').value = question.content;
+                document.getElementById('authorNameModal').value = question.author;
+                document.getElementById('contactInfoModal').value = question.contactInfo || '';
+                document.getElementById('answerContentModal').value = question.answer ? question.answer.content : '';
+                openModal();
+            }
+        }
+
+        // 回答问题
+        function answerQuestion(questionId) {
+            currentQuestionId = questionId;
+            const question = findQuestion(questionId);
+            if (question) {
+                document.getElementById('modalTitle').textContent = '回答问题';
+                document.getElementById('questionId').value = questionId;
+                document.getElementById('questionTitleModal').value = question.title;
+                document.getElementById('questionContentModal').value = question.content;
+                document.getElementById('answerContentModal').value = '';
+                openModal();
+            }
+        }
+
+        // 删除问题
+        function deleteQuestion(questionId) {
+            if (confirm('确定要删除这个问题吗？')) {
+                const categories = ['hotQuestions', 'answeredQuestions', 'pendingQuestions'];
+                categories.forEach(category => {
+                    const index = qaData[category].findIndex(q => q.id === questionId);
+                    if (index !== -1) {
+                        qaData[category].splice(index, 1);
+                    }
+                });
+                saveQAData();
+                loadQuestions();
+            }
+        }
+
+        // 查找问题
+        function findQuestion(questionId) {
+            const categories = ['hotQuestions', 'answeredQuestions', 'pendingQuestions'];
+            for (const category of categories) {
+                const question = qaData[category].find(q => q.id === questionId);
+                if (question) return question;
+            }
+            return null;
+        }
+
+        // 保存问题
+        function saveQuestion(event) {
+            event.preventDefault();
+            const questionId = document.getElementById('questionId').value;
+            const title = document.getElementById('questionTitleModal').value;
+            const content = document.getElementById('questionContentModal').value;
+            const author = document.getElementById('authorNameModal').value;
+            const contactInfo = document.getElementById('contactInfoModal').value;
+            const answerContent = document.getElementById('answerContentModal').value;
+
+            const question = findQuestion(questionId);
+            if (question) {
+                question.title = title;
+                question.content = content;
+                question.author = author;
+                question.contactInfo = contactInfo;
+                
+                if (answerContent) {
+                    if (!question.answer) {
+                        question.answer = {
+                            content: answerContent,
+                            date: new Date().toLocaleDateString()
+                        };
+                        // 将问题移动到已回复列表
+                        moveQuestionToAnswered(questionId);
+                    } else {
+                        question.answer.content = answerContent;
+                    }
+                }
+
+                saveQAData();
+                loadQuestions();
+                closeModal();
+            }
+        }
+
+        // 将问题移动到已回复列表
+        function moveQuestionToAnswered(questionId) {
+            const categories = ['hotQuestions', 'pendingQuestions'];
+            let questionToMove = null;
+            let sourceCategory = null;
+
+            for (const category of categories) {
+                const index = qaData[category].findIndex(q => q.id === questionId);
+                if (index !== -1) {
+                    questionToMove = qaData[category][index];
+                    qaData[category].splice(index, 1);
+                    sourceCategory = category;
+                    break;
+                }
+            }
+
+            if (questionToMove) {
+                qaData.answeredQuestions.unshift(questionToMove);
+            }
+        }
+
+        // 打开模态框
+        function openModal() {
+            const modal = document.getElementById('qaModal');
+            modal.style.display = 'flex';
+            // 使用 setTimeout 确保过渡效果正常工作
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            const modal = document.getElementById('qaModal');
+            modal.classList.remove('show');
+            // 等待过渡效果完成后隐藏模态框
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.getElementById('qaFormModal').reset();
+                currentQuestionId = null;
+            }, 300);
+        }
+
+        // 保存QA数据到localStorage
+        function saveQAData() {
+            localStorage.setItem('qaData', JSON.stringify(qaData));
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuestions();
+            document.getElementById('qaFormModal').addEventListener('submit', saveQuestion);
+        });
+
+        // 关闭模态框的点击事件
+        window.onclick = function(event) {
+            const modal = document.getElementById('qaModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    </script>
+</body>
+</html>
