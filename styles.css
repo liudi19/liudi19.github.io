@@ -3801,14 +3801,16 @@ main {
         top: 60px;
         left: 0;
         right: 0;
-        background: var(--bg-white);
-        padding: 1rem;
+        height: calc(100vh - 60px);
+        background: rgba(255, 255, 255, 0.98);
+        padding: 2rem 1rem;
         box-shadow: 0 4px 20px var(--shadow-light);
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s ease;
         z-index: 1000;
+        overflow-y: auto;
     }
 
     .nav-links-container.active {
@@ -3827,11 +3829,14 @@ main {
     }
 
     .nav-links a {
-        padding: 1rem;
+        padding: 1.2rem;
         width: 100%;
         display: block;
         text-align: center;
         border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-dark);
     }
 
     .nav-links a:hover {
@@ -4227,11 +4232,14 @@ main {
     }
 
     .nav-links a {
-        padding: 1rem;
+        padding: 1.2rem;
         width: 100%;
         display: block;
         text-align: center;
         border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-dark);
     }
 
     .nav-links a:hover {
