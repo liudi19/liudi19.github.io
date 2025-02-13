@@ -219,34 +219,8 @@
     </button>
 
     <!-- 添加模态框 -->
-    <div id="askModal" class="modal">
-        <div class="modal-content">
-            <h2>提交问题</h2>
-            <form id="askForm" onsubmit="submitQuestion(event)">
-                <div class="form-group">
-                    <label for="title">问题标题</label>
-                    <input type="text" id="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="content">问题描述</label>
-                    <textarea id="content" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="author">姓名</label>
-                    <input type="text" id="author" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactInfo">联系方式（急需回复请填写）</label>
-                    <input type="text" id="contactInfo">
-                </div>
-                <div class="modal-buttons">
-                    <button type="button" class="btn-cancel" onclick="closeAskModal()">取消</button>
-                    <button type="submit" class="btn-submit">提交</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+    <!-- 删除这个模态框部分 -->
+        
     <script src="qa-data.js"></script>
     <script>
         function createQuestionCard(question) {
@@ -313,48 +287,18 @@
         document.addEventListener('DOMContentLoaded', loadAllQuestions);
 
         // 添加模态框控制函数
+        // 确保保留 openAskModal 函数，因为按钮还在使用它
         function openAskModal() {
-            document.getElementById('askModal').style.display = 'flex';
-        }
-
-        function closeAskModal() {
-            document.getElementById('askModal').style.display = 'none';
-        }
-
-        function submitQuestion(event) {
-            event.preventDefault();
+            const width = 500;
+            const height = 600;
+            const left = (window.screen.width - width) / 2;
+            const top = (window.screen.height - height) / 2;
             
-            const newQuestion = {
-                title: document.getElementById('title').value,
-                content: document.getElementById('content').value,
-                author: document.getElementById('author').value,
-                contactInfo: document.getElementById('contactInfo').value,
-                date: new Date().toISOString().split('T')[0],
-                isVisible: true,
-                views: 0
-            };
-
-            // 添加新问题
-            addNewQuestion(newQuestion);
-            
-            // 重新加载问题列表
-            loadAllQuestions();
-            
-            // 关闭模态框并重置表单
-            closeAskModal();
-            event.target.reset();
-
-            // 显示提交成功提示
-            alert('问题提交成功！');
+            window.open('ask.html', 'askWindow', 
+                `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`);
         }
 
-        // 点击模态框外部时关闭
-        window.onclick = function(event) {
-            const modal = document.getElementById('askModal');
-            if (event.target === modal) {
-                closeAskModal();
-            }
-        }
+        // 删除 closeAskModal 和 submitQuestion 函数
     </script>
 </body>
 </html>
