@@ -1,30 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>问答列表</title>
+    <title>问答列表 - 哈萨克国立大学</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            min-height: 100vh;
-        }
-
-        .page-header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;  /* 减少顶部内边距 */
+            background-color: white;
+            min-height: calc(100vh - 60px);
         }
 
         .section {
+            margin-top: 1rem;  /* 添加顶部外边距 */
             background: white;
             border-radius: 8px;
             padding: 2rem;
@@ -46,9 +38,53 @@
         .question-card {
             border: 1px solid #eee;
             border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            color: #1e3c72;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .question-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: #888;
+            font-size: 0.85rem;
+            margin: 0;
+            align-items: center;
+        }
+
+        .question-content {
+            color: #666;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            line-height: 1.5;
+        }
+
+        .question-card.expanded .question-content {
+            -webkit-line-clamp: unset;
         }
 
         .question-card:hover {
@@ -56,192 +92,101 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .question-title {
-            font-size: 1.2rem;
-            color: #1e3c72;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .hot-badge {
-            background: linear-gradient(45deg, #ff6b6b, #ff8787);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin-right: 0.8rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .status-badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .status-answered {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .status-pending {
-            background-color: #fff3e0;
-            color: #ef6c00;
-        }
-
         .answer {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-            border-left: 4px solid #28a745;
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
         }
 
-        .answer-title {
-            color: #28a745;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .question-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-
-        .question-meta span {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .question-card.expanded .answer {
+            display: block;
         }
 
         .question-content {
-            line-height: 1.8;
-            color: #333;
+            color: #666;
+            margin: 0.5rem 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .section {
-                padding: 1rem;
-            }
-
-            .question-meta {
-                gap: 1rem;
-            }
-        }
-        /* 添加按钮样式 */
-        .ask-button {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-            transition: transform 0.2s;
-        }
-
-        .ask-button:hover {
-            transform: translateY(-2px);
-        }
-
-        /* 添加模态框样式 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .modal-buttons button {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-submit {
-            background: #1e3c72;
-            color: white;
-        }
-
-        .btn-cancel {
-            background: #6c757d;
-            color: white;
+        .question-card.expanded .question-content {
+            -webkit-line-clamp: unset;
         }
     </style>
+
+    <script>
+        function createQuestionCard(question) {
+            return `
+                <div class="question-card" onclick="toggleQuestion(this)">
+                    <div class="question-header">
+                        <h3 class="question-title">
+                            ${question.isHot ? '<span class="hot-badge"><i class="fas fa-fire"></i> 热点</span>' : ''}
+                            ${question.title}
+                        </h3>
+                        <div class="question-meta">
+                            <span><i class="fas fa-user"></i> ${question.author}</span>
+                            <span><i class="fas fa-calendar"></i> ${question.date}</span>
+                            <span><i class="fas fa-eye"></i> ${question.views || 0}次浏览</span>
+                            <span class="status-badge ${question.answer ? 'status-answered' : 'status-pending'}">
+                                ${question.answer ? '已回复' : '待回复'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="question-content">${question.content}</div>
+                    ${question.answer ? `
+                        <div class="answer">
+                            <h4 class="answer-title"><i class="fas fa-comment-dots"></i> 回答</h4>
+                            <div>${question.answer.content.replace(/\n/g, '<br>')}</div>
+                            <div class="question-meta">
+                                <span><i class="fas fa-clock"></i> ${question.answer.date}</span>
+                                <span><i class="fas fa-user-shield"></i> ${question.answer.adminName}</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // 添加问题展开/收起功能
+        function toggleQuestion(element) {
+            // 关闭其他展开的问题
+            document.querySelectorAll('.question-card.expanded').forEach(card => {
+                if (card !== element) {
+                    card.classList.remove('expanded');
+                }
+            });
+            
+            // 切换当前问题的展开状态
+            element.classList.toggle('expanded');
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="page-header">
-            <h1>问答数据列表</h1>
+    <!-- 添加导航栏 -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpg" alt="Al-Faribi大学标志">
         </div>
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links-container">
+            <ul class="nav-links">
+                <li><a href="index.html">主页</a></li>
+                <li><a href="campus-life.html">校园生活</a></li>
+                <li><a href="partners.html">合作伙伴</a></li>
+                <li><a href="qa-list.html" class="active">Q&A</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 删除 page-header 部分 -->
         
         <!-- 关注热点问题 -->
         <div class="section">
@@ -307,17 +252,19 @@
         function createQuestionCard(question) {
             return `
                 <div class="question-card">
-                    <h3 class="question-title">
-                        ${question.isHot ? '<span class="hot-badge"><i class="fas fa-fire"></i> 热点</span>' : ''}
-                        ${question.title}
-                    </h3>
-                    <div class="question-meta">
-                        <span><i class="fas fa-user"></i> ${question.author}</span>
-                        <span><i class="fas fa-calendar"></i> ${question.date}</span>
-                        <span><i class="fas fa-eye"></i> ${question.views || 0}次浏览</span>
-                        <span class="status-badge ${question.answer ? 'status-answered' : 'status-pending'}">
-                            ${question.answer ? '已回复' : '待回复'}
-                        </span>
+                    <div class="question-header">
+                        <h3 class="question-title">
+                            ${question.isHot ? '<span class="hot-badge"><i class="fas fa-fire"></i> 热点</span>' : ''}
+                            ${question.title}
+                        </h3>
+                        <div class="question-meta">
+                            <span><i class="fas fa-user"></i> ${question.author}</span>
+                            <span><i class="fas fa-calendar"></i> ${question.date}</span>
+                            <span><i class="fas fa-eye"></i> ${question.views || 0}次浏览</span>
+                            <span class="status-badge ${question.answer ? 'status-answered' : 'status-pending'}">
+                                ${question.answer ? '已回复' : '待回复'}
+                            </span>
+                        </div>
                     </div>
                     <div class="question-content">${question.content}</div>
                     ${question.answer ? `
