@@ -136,89 +136,150 @@
 
 
         // 加载问题列表
-        function loadQuestions() {
-            // 热点问题
-            const hotQuestionsHTML = qaData.hotQuestions
-                .filter(q => q.isVisible)
-                .map(createQuestionHTML)
-                .join('');
-            document.getElementById('hotQuestionsList').innerHTML = hotQuestionsHTML;
-
-            // 已回复问题
-            const answeredQuestionsHTML = qaData.answeredQuestions
-                .filter(q => q.isVisible)
-                .map(createQuestionHTML)
-                .join('');
-            document.getElementById('answeredQuestionsList').innerHTML = answeredQuestionsHTML;
-
-            // 待回复问题
-            const pendingQuestionsHTML = qaData.pendingQuestions
-                .filter(q => q.isVisible)
-                .map(createQuestionHTML)
-                .join('');
-            document.getElementById('pendingQuestionsList').innerHTML = pendingQuestionsHTML;
-        }
-
-        // 处理问题提交
-        document.getElementById('newQuestionForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 获取表单数据
-            const title = document.getElementById('questionTitle').value;
-            const content = document.getElementById('questionContent').value;
-            const userName = document.getElementById('userName').value;
-            const contact = document.getElementById('contactInfo').value;
-
-            // 创建新问题
-            const newQuestion = addNewQuestion({
-                title,
-                content,
-                author: userName,
-                contactInfo: contact
-            });
-
-            // 重新加载问题列表
-            loadQuestions();
-            
-            // 清空表单并隐藏
-            this.reset();
-            hideQuestionForm();
-
-            // 显示提示
-            alert('问题提交成功！管理员会尽快回复。');
-        });
-
-        // 页面加载完成后加载问题
-        document.addEventListener('DOMContentLoaded', loadQuestions);
-
-        // 移动端菜单切换
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinksContainer = document.querySelector('.nav-links-container');
-
-        menuToggle.addEventListener('click', function() {
-            navLinksContainer.classList.toggle('active');
-            const icon = this.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        });
-
-        const navLinks = document.querySelectorAll('.nav-links a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navLinksContainer.classList.remove('active');
-                menuToggle.querySelector('i').classList.remove('fa-times');
-                menuToggle.querySelector('i').classList.add('fa-bars');
-            });
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.navbar')) {
-                navLinksContainer.classList.remove('active');
-                menuToggle.querySelector('i').classList.remove('fa-times');
-                menuToggle.querySelector('i').classList.add('fa-bars');
+        <script src="qa-data.js"></script>
+        <script>
+            // 加载问题列表
+            function loadQuestions() {
+                // 加载关注热点问题
+                const hotQuestionsContainer = document.getElementById('hotQuestions');
+                hotQuestionsContainer.innerHTML = '';
+                
+                // 只显示可见的热点问题
+                qaData.hotQuestions
+                    .filter(q => q.isVisible)
+                    .forEach(question => {
+                        const questionElement = createQuestionElement(question);
+                        hotQuestionsContainer.appendChild(questionElement);
+                    });
+        
+                // 加载已回复的问题
+                const answeredQuestionsContainer = document.getElementById('answeredQuestions');
+                answeredQuestionsContainer.innerHTML = '';
+                
+                // 只显示可见的已回复问题，且不显示已经在热点中的问题
+                qaData.answeredQuestions
+                    .filter(q => q.isVisible && !q.isHot)
+                    .forEach(question => {
+                        const questionElement = createQuestionElement(question);
+                        answeredQuestionsContainer.appendChild(questionElement);
+                    });
             }
+        
+            // 创建问题元素
+            function createQuestionElement(question) {
+                const div = document.createElement('div');
+                div.className = 'question-item';
+                div.innerHTML = `
+                    <h3>
+                        ${question.isHot ? '<i class="fas fa-fire" style="color: #ff6b6b; margin-right: 8px;"></i>' : ''}
+                        ${question.title}
+                    </h3>
+                    <p class="question-content">${question.content}</p>
+                    <div class="question-meta">
+                        <span class="author">提问人：${question.author}</span>
+                        <span class="date">提问时间：${question.date}</span>
+                        <span class="views">浏览：${question.views || 0}</span>
+                    </div>
+                    ${question.answer ? `
+                        <div class="answer">
+                            <h4>回答：</h4>
+                            <p>${question.answer.content.replace(/\n/g, '<br>')}</p>
+                            <div class="answer-meta">
+                                <span class="date">回答时间：${question.answer.date}</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                `;
+                return div;
+            }
+        
+            // 页面加载时初始化
+            document.addEventListener('DOMContentLoaded', () => {
+                loadQuestions();
+            });
+        </script>
+        // 热点问题
+        const hotQuestionsHTML = qaData.hotQuestions
+            .filter(q => q.isVisible)
+            .map(createQuestionHTML)
+            .join('');
+        document.getElementById('hotQuestionsList').innerHTML = hotQuestionsHTML;
+
+        // 已回复问题
+        const answeredQuestionsHTML = qaData.answeredQuestions
+            .filter(q => q.isVisible)
+            .map(createQuestionHTML)
+            .join('');
+        document.getElementById('answeredQuestionsList').innerHTML = answeredQuestionsHTML;
+
+        // 待回复问题
+        const pendingQuestionsHTML = qaData.pendingQuestions
+            .filter(q => q.isVisible)
+            .map(createQuestionHTML)
+            .join('');
+        document.getElementById('pendingQuestionsList').innerHTML = pendingQuestionsHTML;
+    }
+
+    // 处理问题提交
+    document.getElementById('newQuestionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // 获取表单数据
+        const title = document.getElementById('questionTitle').value;
+        const content = document.getElementById('questionContent').value;
+        const userName = document.getElementById('userName').value;
+        const contact = document.getElementById('contactInfo').value;
+
+        // 创建新问题
+        const newQuestion = addNewQuestion({
+            title,
+            content,
+            author: userName,
+            contactInfo: contact
         });
-    </script>
+
+        // 重新加载问题列表
+        loadQuestions();
+        
+        // 清空表单并隐藏
+        this.reset();
+        hideQuestionForm();
+
+        // 显示提示
+        alert('问题提交成功！管理员会尽快回复。');
+    });
+
+    // 页面加载完成后加载问题
+    document.addEventListener('DOMContentLoaded', loadQuestions);
+
+    // 移动端菜单切换
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinksContainer = document.querySelector('.nav-links-container');
+
+    menuToggle.addEventListener('click', function() {
+        navLinksContainer.classList.toggle('active');
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinksContainer.classList.remove('active');
+            menuToggle.querySelector('i').classList.remove('fa-times');
+            menuToggle.querySelector('i').classList.add('fa-bars');
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.navbar')) {
+            navLinksContainer.classList.remove('active');
+            menuToggle.querySelector('i').classList.remove('fa-times');
+            menuToggle.querySelector('i').classList.add('fa-bars');
+        }
+    });
+</script>
 
     <!-- 页脚 -->
     <footer>
