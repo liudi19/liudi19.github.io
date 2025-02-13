@@ -60,6 +60,7 @@
             align-items: center;
             gap: 0.5rem;
             flex: 1;
+            cursor: pointer;
         }
 
         .question-meta {
@@ -74,17 +75,68 @@
 
         .question-content {
             color: #666;
-            margin: 0;
+            margin: 0.5rem 0;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 1;
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             line-height: 1.5;
+            transition: all 0.3s ease;
         }
 
         .question-card.expanded .question-content {
             -webkit-line-clamp: unset;
+        }
+
+        .answer {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .question-card.expanded .answer {
+            display: block;
+            opacity: 1;
+        }
+
+        .answer-title {
+            color: #1e3c72;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .status-answered {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+
+        .hot-badge {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
         }
 
         .question-card:hover {
@@ -121,7 +173,7 @@
     <script>
         function createQuestionCard(question) {
             return `
-                <div class="question-card" onclick="toggleQuestion(this)">
+                <div class="question-card" onclick="viewQuestionDetail('${question.id}')">
                     <div class="question-header">
                         <h3 class="question-title">
                             ${question.isHot ? '<span class="hot-badge"><i class="fas fa-fire"></i> 热点</span>' : ''}
@@ -151,18 +203,7 @@
             `;
         }
 
-        // 添加问题展开/收起功能
-        function toggleQuestion(element) {
-            // 关闭其他展开的问题
-            document.querySelectorAll('.question-card.expanded').forEach(card => {
-                if (card !== element) {
-                    card.classList.remove('expanded');
-                }
-            });
-            
-            // 切换当前问题的展开状态
-            element.classList.toggle('expanded');
-        }
+        
     </script>
 </head>
 <body>
@@ -224,7 +265,7 @@
     <script>
         function createQuestionCard(question) {
             return `
-                <div class="question-card">
+                <div class="question-card" onclick="viewQuestionDetail('${question.id}')">
                     <div class="question-header">
                         <h3 class="question-title">
                             ${question.isHot ? '<span class="hot-badge"><i class="fas fa-fire"></i> 热点</span>' : ''}
@@ -281,7 +322,9 @@
                 .map(createQuestionCard)
                 .join('');
         }
-
+        function viewQuestionDetail(questionId) {
+    window.location.href = `qa-detail.html?id=${questionId}`;
+}
         // 页面加载时初始化
         document.addEventListener('DOMContentLoaded', loadAllQuestions);
 
@@ -300,6 +343,7 @@
         // 删除 closeAskModal 和 submitQuestion 函数
     </script>
         </div>
+        
 
     <!-- 页脚 -->
     <footer>

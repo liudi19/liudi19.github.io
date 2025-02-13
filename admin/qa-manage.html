@@ -426,6 +426,8 @@
                 document.getElementById('questionId').value = questionId;
                 document.getElementById('questionTitleModal').value = question.title;
                 document.getElementById('questionContentModal').value = question.content;
+                document.getElementById('authorNameModal').value = question.author;
+                document.getElementById('contactInfoModal').value = question.contactInfo || '';
                 document.getElementById('answerContentModal').value = '';
                 openModal();
             }

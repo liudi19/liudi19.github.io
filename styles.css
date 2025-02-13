@@ -3970,3 +3970,64 @@ main {
     background-color: #164a91;
     transform: translateY(-2px);
 }
+/* QA列表样式 */
+.qa-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.qa-item {
+    background: var(--bg-white);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 10px var(--shadow-light);
+    overflow: hidden;
+}
+
+.qa-question {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.qa-question:hover {
+    background: var(--bg-light);
+}
+
+.qa-question h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.qa-question i {
+    color: var(--primary-red);
+    transition: transform 0.3s ease;
+}
+
+.qa-answer {
+    padding: 0 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    color: var(--text-gray);
+    line-height: 1.6;
+}
+
+.qa-item.active .qa-question {
+    background: var(--bg-light);
+}
+
+.qa-item.active .qa-question i {
+    transform: rotate(180deg);
+}
+
+.qa-item.active .qa-answer {
+    padding: 1.5rem;
+    max-height: 500px;
+    border-top: 1px solid var(--shadow-light);
+}
