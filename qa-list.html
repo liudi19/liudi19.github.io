@@ -528,8 +528,31 @@
             setTimeout(() => modal.style.display = 'none', 300);
         }
 
+        // 在 script 标签中添加以下函数
+        function canSubmitQuestion() {
+            const today = new Date().toISOString().split('T')[0];
+            const lastSubmission = localStorage.getItem('lastQuestionSubmission');
+            
+            if (lastSubmission) {
+                const [lastDate, lastIp] = JSON.parse(lastSubmission);
+                
+                // 检查是否是同一天
+                if (lastDate === today) {
+                    alert('抱歉，每个IP每天只能提交一个问题。请明天再来！');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 修改 submitQuestion 函数
         function submitQuestion(event) {
             event.preventDefault();
+            
+            // 检查是否可以提交
+            if (!canSubmitQuestion()) {
+                return;
+            }
             
             const newQuestion = {
                 title: document.getElementById('title').value,
@@ -540,6 +563,10 @@
                 isVisible: true,
                 views: 0
             };
+
+            // 记录提交时间和IP
+            const today = new Date().toISOString().split('T')[0];
+            localStorage.setItem('lastQuestionSubmission', JSON.stringify([today, 'user_ip']));
 
             // 添加新问题
             addNewQuestion(newQuestion);
